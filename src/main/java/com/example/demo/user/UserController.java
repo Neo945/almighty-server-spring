@@ -1,5 +1,6 @@
 package com.example.demo.user;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class UserController {
     }
 
     @GetMapping("/")
-    public List<User> getStudents(HttpServletRequest req, @RequestAttribute("startTime") User user) {
+    public List<User> getStudents(HttpServletRequest req) {
         return this.studentService.getStudents();
     }
 
@@ -55,7 +56,7 @@ public class UserController {
 
     @PostMapping(path = "/login")
     public String login(@RequestBody LoginForm loginForm,
-            HttpServletResponse response) {
+            HttpServletResponse response) throws UnsupportedEncodingException {
         String token = this.studentService.login(loginForm);
         Cookie cookie = new Cookie("token", token);
         cookie.setHttpOnly(true);
@@ -63,12 +64,12 @@ public class UserController {
         cookie.setPath("/");
         cookie.setMaxAge(60 * 60 * 24 * 365 * 10);
         response.addCookie(cookie);
-        return "token";
+        return "login successful";
     }
 
     @GetMapping(path = "/user")
-    public User getUser(@CookieValue("token") String token, HttpServletRequest request) {
-        return this.studentService.getStudents(token);
+    public User getUser(@CookieValue("token") String token, @RequestAttribute("user") User user) {
+        return user;
     }
 
     @PostMapping(path = "/logout")

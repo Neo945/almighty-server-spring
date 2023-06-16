@@ -1,18 +1,24 @@
 package com.example.demo.user;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.config.JwtGenerator;
+
 @Service
 public class UserService {
-
     private final UserRepository studentRepository;
 
+    private final JwtGenerator jwtGenerator;
+
     @Autowired
-    public UserService(UserRepository studentRepository) {
+
+    public UserService(UserRepository studentRepository, JwtGenerator jwtGenerator) {
         this.studentRepository = studentRepository;
+        this.jwtGenerator = jwtGenerator;
     }
 
     public List<User> getStudents() {
@@ -36,11 +42,12 @@ public class UserService {
         return studentRepository.findById(studentId).orElseThrow(() -> new IllegalStateException("Student not found"));
     }
 
-    public String login(LoginForm loginForm) {
+    public String login(LoginForm loginForm) throws UnsupportedEncodingException {
         User user = studentRepository.findStudentByEmail(loginForm.getEmail())
                 .orElseThrow(() -> new IllegalStateException("Email not found"));
         if (user.checkPassword(loginForm.getPassword())) {
-            return user.getId();
+            String token = jwtGenerator.generateToken(user);
+            return token;
         } else {
             throw new IllegalStateException("Wrong password");
         }

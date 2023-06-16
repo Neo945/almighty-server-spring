@@ -16,10 +16,10 @@ POST http://localhost:8080/api/v1/student/login HTTP/1.1
 Content-Type: application/json
 
 {
-    "email": "test2@gmail.com",
+    "email": "test@gmail.com",
     "password": "test"
 }
 
 ###
 GET http://localhost:8080/api/v1/student/user HTTP/1.1
-Cookie: token=648b41c2587bca7f7a01ff35; Max-Age=315360000; Expires=Sun, 12 Jun 2033 16:52:19 GMT; Path=/; Secure; HttpOnly
+Cookie: token=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2NDhjMjQzMTg1NThlZjY1YTU2YTE0MWQiLCJleHAiOjE2ODY5NDE5MjgsImlhdCI6MTY4NjkwNTkyOH0.xsxerLtr0Ax_NS-AhttKlZcK3e_EEG9K0EcceHcni08; Max-Age=315360000; Expires=Mon, 13 Jun 2033 08:58:48 GMT; Path=/; Secure; HttpOnly
