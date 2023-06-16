@@ -9,7 +9,7 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:8080/api/v1/student/648b3470a53ee335a6ddb25f HTTP/1.1
+GET http://localhost:8080/api/v1/student/ HTTP/1.1
 
 ###
 POST http://localhost:8080/api/v1/student/login HTTP/1.1
